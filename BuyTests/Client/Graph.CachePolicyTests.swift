@@ -37,8 +37,10 @@ class Graph_CachePolicyTests: XCTestCase {
         XCTAssertEqual(Graph.CachePolicy.networkOnly,                Graph.CachePolicy.networkOnly)
         XCTAssertEqual(Graph.CachePolicy.cacheFirst(expireIn: 10),   Graph.CachePolicy.cacheFirst(expireIn: 10))
         XCTAssertEqual(Graph.CachePolicy.networkFirst(expireIn: 10), Graph.CachePolicy.networkFirst(expireIn: 10))
+        XCTAssertEqual(Graph.CachePolicy.cacheThenNetwork(expireIn: 10), Graph.CachePolicy.cacheThenNetwork(expireIn: 10))
         
         XCTAssertNotEqual(Graph.CachePolicy.cacheFirst(expireIn: 10),   Graph.CachePolicy.cacheFirst(expireIn: 15))
         XCTAssertNotEqual(Graph.CachePolicy.networkFirst(expireIn: 10), Graph.CachePolicy.networkFirst(expireIn: 15))
+        XCTAssertNotEqual(Graph.CachePolicy.cacheThenNetwork(expireIn: 10), Graph.CachePolicy.cacheThenNetwork(expireIn: 15))
     }
 }
