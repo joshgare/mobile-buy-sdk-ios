@@ -140,7 +140,7 @@ internal extension Graph {
                 self.task?.resume()
                 
             case .cacheThenNetwork(let expireIn):
-                Log("Exercising cache policy: CACHE_FIRST(\(expireIn))")
+                Log("Exercising cache policy: CACHE_FIRST(\(expireIn ?? -1))")
                 
                 self.cachedModelFor(hash, expireIn: expireIn) { response in
                     if let response = response {

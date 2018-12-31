@@ -48,7 +48,7 @@ extension Graph {
         case networkFirst(expireIn: Int)
         
         /// Load from cache if staleness interval is not exceeded, then load from network
-        case cacheThenNetwork(expireIn: Int)
+        case cacheThenNetwork(expireIn: Int?)
     }
 }
 
