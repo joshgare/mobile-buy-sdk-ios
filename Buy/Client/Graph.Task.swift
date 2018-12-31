@@ -138,6 +138,20 @@ internal extension Graph {
                     completion(response, error)
                 }
                 self.task?.resume()
+                
+            case .cacheThenNetwork(let expireIn):
+                Log("Exercising cache policy: CACHE_FIRST(\(expireIn))")
+                
+                self.cachedModelFor(hash, expireIn: expireIn) { response in
+                    if let response = response {
+                        completion(response, nil)
+                        self.resume(using: .networkOnly)
+                        return
+                    } else {
+                        self.resume(using: .networkOnly)
+                    }
+                }
+                
             }
         }
         

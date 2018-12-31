@@ -46,6 +46,9 @@ extension Graph {
         
         /// Load from network but fallback to cached data if the request fails
         case networkFirst(expireIn: Int)
+        
+        /// Load from cache if staleness interval is not exceeded, then load from network
+        case cacheThenNetwork(expireIn: Int)
     }
 }
 
@@ -57,6 +60,7 @@ extension Graph.CachePolicy {
         case (.networkOnly,          .networkOnly):                         return true
         case (.cacheFirst(let lv),   .cacheFirst(let rv))   where lv == rv: return true
         case (.networkFirst(let lv), .networkFirst(let rv)) where lv == rv: return true
+        case (.cacheThenNetwork(let lv), .cacheThenNetwork(let rv)) where lv == rv: return true
         default:
             return false
         }
