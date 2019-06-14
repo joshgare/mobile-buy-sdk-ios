@@ -1,6 +1,6 @@
 //
-//  GiftCardViewModel.swift
-//  Storefront
+//  MetafieldValueType.swift
+//  Buy
 //
 //  Created by Shopify.
 //  Copyright (c) 2017 Shopify Inc. All rights reserved.
@@ -25,32 +25,19 @@
 //
 
 import Foundation
-import Buy
 
-final class GiftCardViewModel: ViewModel {
-    
-    typealias ModelType = Storefront.AppliedGiftCard
-    
-    let model:  ModelType
-    
-    let id:             String
-    let balance:        Decimal
-    let amountUsed:     Decimal
-    let lastCharacters: String
-    
-    // ----------------------------------
-    //  MARK: - Init -
-    //
-    required init(from model: ModelType) {
-        self.model            = model
-        
-        self.id             = model.id.rawValue
-        self.balance        = model.balanceV2.amount
-        self.amountUsed     = model.amountUsedV2.amount
-        self.lastCharacters = model.lastCharacters
-    }
-}
+extension Storefront {
+	/// Metafield value types. 
+	public enum MetafieldValueType: String {
+		/// An integer metafield. 
+		case integer = "INTEGER"
 
-extension Storefront.AppliedGiftCard: ViewModeling {
-    typealias ViewModelType = GiftCardViewModel
+		/// A json string metafield. 
+		case jsonString = "JSON_STRING"
+
+		/// A string metafield. 
+		case string = "STRING"
+
+		case unknownValue = ""
+	}
 }

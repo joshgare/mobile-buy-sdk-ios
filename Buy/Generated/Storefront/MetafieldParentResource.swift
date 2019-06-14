@@ -1,5 +1,5 @@
 //
-//  PricingValue.swift
+//  MetafieldParentResource.swift
 //  Buy
 //
 //  Created by Shopify.
@@ -26,62 +26,62 @@
 
 import Foundation
 
-/// The price value (fixed or percentage) for a discount application. 
-public protocol PricingValue {
+/// A resource that the metafield belongs to. 
+public protocol MetafieldParentResource {
 }
 
 extension Storefront {
-	/// The price value (fixed or percentage) for a discount application. 
-	open class PricingValueQuery: GraphQL.AbstractQuery, GraphQLQuery {
-		public typealias Response = PricingValue
+	/// A resource that the metafield belongs to. 
+	open class MetafieldParentResourceQuery: GraphQL.AbstractQuery, GraphQLQuery {
+		public typealias Response = MetafieldParentResource
 
 		override init() {
 			super.init()
 			addField(field: "__typename")
 		}
 
-		/// The price value (fixed or percentage) for a discount application. 
+		/// A resource that the metafield belongs to. 
 		@discardableResult
-		open func onMoneyV2(subfields: (MoneyV2Query) -> Void) -> PricingValueQuery {
-			let subquery = MoneyV2Query()
+		open func onProduct(subfields: (ProductQuery) -> Void) -> MetafieldParentResourceQuery {
+			let subquery = ProductQuery()
 			subfields(subquery)
-			addInlineFragment(on: "MoneyV2", subfields: subquery)
+			addInlineFragment(on: "Product", subfields: subquery)
 			return self
 		}
 
-		/// The price value (fixed or percentage) for a discount application. 
+		/// A resource that the metafield belongs to. 
 		@discardableResult
-		open func onPricingPercentageValue(subfields: (PricingPercentageValueQuery) -> Void) -> PricingValueQuery {
-			let subquery = PricingPercentageValueQuery()
+		open func onProductVariant(subfields: (ProductVariantQuery) -> Void) -> MetafieldParentResourceQuery {
+			let subquery = ProductVariantQuery()
 			subfields(subquery)
-			addInlineFragment(on: "PricingPercentageValue", subfields: subquery)
+			addInlineFragment(on: "ProductVariant", subfields: subquery)
 			return self
 		}
 	}
 
-	/// The price value (fixed or percentage) for a discount application. 
-	open class UnknownPricingValue: GraphQL.AbstractResponse, GraphQLObject, PricingValue {
-		public typealias Query = PricingValueQuery
+	/// A resource that the metafield belongs to. 
+	open class UnknownMetafieldParentResource: GraphQL.AbstractResponse, GraphQLObject, MetafieldParentResource {
+		public typealias Query = MetafieldParentResourceQuery
 
 		internal override func deserializeValue(fieldName: String, value: Any) throws -> Any? {
 			let fieldValue = value
 			switch fieldName {
 				default:
-				throw SchemaViolationError(type: UnknownPricingValue.self, field: fieldName, value: fieldValue)
+				throw SchemaViolationError(type: UnknownMetafieldParentResource.self, field: fieldName, value: fieldValue)
 			}
 		}
 
-		internal static func create(fields: [String: Any]) throws -> PricingValue {
+		internal static func create(fields: [String: Any]) throws -> MetafieldParentResource {
 			guard let typeName = fields["__typename"] as? String else {
-				throw SchemaViolationError(type: UnknownPricingValue.self, field: "__typename", value: fields["__typename"] ?? NSNull())
+				throw SchemaViolationError(type: UnknownMetafieldParentResource.self, field: "__typename", value: fields["__typename"] ?? NSNull())
 			}
 			switch typeName {
-				case "MoneyV2": return try MoneyV2.init(fields: fields)
+				case "Product": return try Product.init(fields: fields)
 
-				case "PricingPercentageValue": return try PricingPercentageValue.init(fields: fields)
+				case "ProductVariant": return try ProductVariant.init(fields: fields)
 
 				default:
-				return try UnknownPricingValue.init(fields: fields)
+				return try UnknownMetafieldParentResource.init(fields: fields)
 			}
 		}
 
